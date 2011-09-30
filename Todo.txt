@@ -1,0 +1,201 @@
+
+
+Verificar e confirmar os casos de aplicacao da funcao observe...
+
+Apresentacao dos codigos observaveis. (OK)
+
+Aplicacao da funcao observe em chamadas infixas. (OK)
+
+Apliacao da funcao em mais niveis.(OK)
+
+Investigar os demais itens da gramatica em busca de candidatos
+a receber codigo de depuracao.
+Uso de expressoes do tipo nao point free.
+
+Ao aplicar um observe em uma funcao, dentro de outra, o label
+poderia ser automaticamente setado para "observando chamada de 
+f1 dentro de f2"
+
+Se eu varrer recursivamente vou precisar passar informacoes 
+de estado entre as chamadas recursivas, isso pode deixar 
+o codigo um pouco confuso, porem poderia usar monads, pra isso.
+
+
+O parser desenconsidera comentarios, e portanto o pretty print 
+nao imprime comentarios, e caracteres nulos.  
+(Parcialmente OK, desnecessario se for gerar codigos apenas 
+por questoes de depuracao)
+
+Identacao do codigo tambem nao e respeitada.
+(Parcialmente OK, desneessario se for gerar codigos apenas
+por questoes de depuracao)
+
+O pretty print esta imprimindo no cabecalho "module Main (main) where" 
+(Parcialmente OK, se o arquivo a ser instrumentado já contiver
+uma declaracao module esse problema nao ocorre)
+
+Certos tipos que sao definidos pelo usuario, o observe precisa 
+saber como examina-los, deve-se identificar esses tipos, e apresentar
+a usuario, para que ele insira o codigo de observacao.
+(Para uma versao futura, esta apenas identifica aplicacao de funcao
+sob funcao)
+
+A tambem a possibildiade de definicao de tipos opacos para o observe,
+sao tipos que o usuario nao deseja obervar.
+(Para uma versao futura, esta apenas identifica aplicacao de funcao
+sob funcao)
+
+Testes, e se o codigo ja contiver codigos de depuracao ?
+Possibilidade na interface de introducao de outros codigos depuradores
+no mesmo esquema utilizado para a biblioteca Observe. import + a funcao
+
+Expressoes lambda... 
+Expressoes (podem ser computadas como saida) 
+	    if 
+	    case 
+	    do
+	    compreensao de lista
+	 	lambda 
+	    
+
+aplicacoes em estruturas de dados
+ele verifica as entradas, e apresenta as saidas.
+
+A biblioteca Language.Haskell.Parser parece
+ter sido construida utilizando o Happy
+(http://www.haskell.org/happy/) Gerador de Parser
+
+(http://cvs.haskell.org/Hugs/pages/users_guide/observe.html)
+com breakpoints!
+
+
+
+Problemas: 
+
+1 - aplicar obseve duas vezes na funcao.... no inicio do seu corpo e na, sua chamada, 
+e desnecessario e sera confuso a saida.
+
+	Solucoes: 
+		Aplicar somente no inicio das funcoes... onde ela eh chamada nao se aplica
+		Aplicar somente nas suas chamadas...
+
+2 - Na lista de matches.... aplicar em varios matchs semelhantes da mesma funcao.
+	
+	Solucao.... 
+		Aplicar no match mais complicado ou no maior match ???
+
+
+se e2 for HsApp = entao HsApp eh arvore....
+e1 nunca sera uma funcao...
+
+Uma ideia fazer uma biblioteca de remanufauracao de codigo, 
+pegar os tipos de remanufaturacao existentes no libHare
+e tentar realiza-los usando esse mesmo esquema para gerar
+codigo de depuracao.
+
+Por exemplo em if's iguais - coloca-lo em uma funcao, e 
+fazer o codigo chamar a funcao.
+
+
+------------------------- 
+Organizar saidas da enumeracao, p/ funcao.  (OK)
+Contador estah zerando a cada funbind	(OK)
+Testar funcoes com guarda (OK)
+Limitar a impressao de codigo. (Parcial OK, Aplicacao de funcao!)
+Apresentar a linha de codigo ?
+Indetacao sai diferente do codigo do usuario.
+imprime modulo main... (Parcial OK, se a declaracao module for usada sem problemas)
+Operacao Infixa nao suportada (OK)
+putStrLn $ (show x)  
+O operador $ é tratado como um operacao Infixa! 
+
+Um dos problemas é o suporte a biblioteca observe...
+
+
+Hugs.Observe...
+
+
+
+
+------- Ultimos 
+
+
+Trabalhar com guardas (OK, analisa somente o lado direito) 
+Dentro de expressoes do tipo do (Instavel)
+Uso do Operador $ (OK parcial, identifica a ultima app)
+Uso do operador let (Nao implemetado)
+
+
+Rodar na linha de comando... runhugs  (OK)
+Indicar qual biblioteca e qual funcao! (Bug na passagem de parametro)
+Linha de Código ???
+Help ? (OK)
+
+Colocar mais ou dois exemplos de codigo.
+Eu comento sobre o uso da biblioteca Language.Haskell.*
+colocar referencia no relatorio ?
+Colocar uma tela do programa em funcionamento.
+
+
+E o help!
+Hugs.Observe observe 
+
+
+
+--------------
+
+Suporte a toda a sintaxe...
+
+Expressoes if  (OK - falta a condicao)
+
+Expressoes LET
+--expressoes do tipo let
+HsLet [HsDecl] HsExp
+HsDecl HsPatBind loc HsPat HsRhs [HsDecl]
+HsRhs
+
+Expressoes Lambda
+Clausulas Where
+	HsMatch loc nm pat rhs hsdcl
+
+Lista de declaracoes... hsdcl
+procurar no lado direito dessas declaracoes
+que usam patterm match com ou sem guardas.
+
+Expressoes Case of
+HsCase = HsExp [HsAlt]
+HsAlt = SrcLoc HsPat HsGuardedAlts [HsDecl]
+HsGuardedAlts = HsUnGuardedAlt Exp |
+HsGuardedAlts [HsGuardedAlt]
+HsGuardedAlt
+
+Expressoes em listas
+HsListComp = HsExp [HsStmt]
+
+Expessoes [x .. y]
+[1 .. gx 2]
+HsEnumFromTo HsExp HsExp
+
+Expressoes em tuplas
+HsTuple [HsExp]
+
+Expressoes em listas
+HsList [HsExp]
+
+
+Expressoes DO (OK)
+	Padroes do tipo 
+		pat <- exp (OK)
+
+
+
+
+
+
+
+
+
+
+
+
+

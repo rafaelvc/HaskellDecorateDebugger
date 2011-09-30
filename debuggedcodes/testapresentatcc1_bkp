@@ -1,0 +1,8 @@
+hx 0 = 1
+hx n = hx((gx n) + 1)
+
+hx 0 = 1
+hx n | (n == 1) =  hx((gx n) + 1)
+     | (n == 2) = gx n
+     | (n == 3) = if (10 == 10) then max n 10 else min n 10
+     | otherwise = 10
